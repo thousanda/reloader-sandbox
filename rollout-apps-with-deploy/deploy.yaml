@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: deployment-for-rollout
   annotations:
-    configmap.reloader.stakater.com/reload: rollout-cm
+    configmap.reloader.stakater.com/reload: rollout-cm-with-deploy
   labels:
-    app: rollout-app
+    app: rollout-app-with-deploy
   namespace: apps
 spec:
   replicas: 0
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: rollout-app
+      app: rollout-app-with-deploy
   strategy:
     rollingUpdate:
       maxSurge: 100%
@@ -21,7 +21,7 @@ spec:
   template:
     metadata:
       labels:
-        app: rollout-app
+        app: rollout-app-with-deploy
     spec:
       containers:
       - image: busybox:latest
@@ -39,5 +39,5 @@ spec:
             memory: 32Mi
         envFrom:
         - configMapRef:
-            name: rollout-cm
+            name: rollout-cm-with-deploy
       terminationGracePeriodSeconds: 2

@@ -1,15 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
-  name: rollout-app
+  name: rollout-app-with-deploy
   namespace: apps
 spec:
   replicas: 1
   revisionHistoryLimit: 3
   selector:
     matchLabels:
-      app: rollout-app
-  workloadRef:  # 既存のDeploymentを参照する
+      app: rollout-app-with-deploy
+  workloadRef:
     apiVersion: apps/v1
     kind: Deployment
     name: deployment-for-rollout
