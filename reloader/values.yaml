@@ -3,4 +3,6 @@ reloader:
   namespaceSelector: "kubernetes.io/metadata.name=apps"
   # Argo Rollouts support must be explicitly enabled
   # This configuration is not needed when the Rollouts are defined referring Deployments in which Reloader is configured
+  # - `rollout-app` needs this
+  # - `rollout-app-with-deploy` does not need this
   isArgoRollouts: true

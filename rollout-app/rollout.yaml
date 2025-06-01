@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollout-app
+  annotations:
+    configmap.reloader.stakater.com/reload: rollout-cm
+  labels:
+    app: rollout-app
+  namespace: apps
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: rollout-app
+  strategy:
+    canary:
+      maxUnavailable: 100%
+      maxSurge: 100%
+      steps:
+        - setWeight: 100
+  template:
+    metadata:
+      labels:
+        app: rollout-app
+    spec:
+      containers:
+      - image: busybox:latest
+        imagePullPolicy: Always
+        name: busybox
+        args:
+        - sleep
+        - infinity
+        resources:
+          limits:
+            cpu: 100m
+            memory: 32Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
+        envFrom:
+        - configMapRef:
+            name: rollout-cm
+      terminationGracePeriodSeconds: 2

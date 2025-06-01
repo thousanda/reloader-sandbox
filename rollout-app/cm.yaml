@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rollout-cm
+  namespace: apps
+data:
+  key1: config1
+  key2: config2
