@@ -2,6 +2,15 @@
 
 https://github.com/stakater/Reloader
 
+## Prerequisites
+You must have a Kubernetes cluster.
+
+I used kind (https://kind.sigs.k8s.io/) to verify these examples.
+
+```
+$ kind create cluster
+```
+
 ## Deploy Reloader to your cluster
 see `./reloader`
 
