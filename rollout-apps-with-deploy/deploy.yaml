@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-for-rollout
+  annotations:
+    configmap.reloader.stakater.com/reload: rollout-cm
+  labels:
+    app: rollout-app
+  namespace: apps
+spec:
+  replicas: 0
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: rollout-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 100%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: rollout-app
+    spec:
+      containers:
+      - image: busybox:latest
+        imagePullPolicy: Always
+        name: busybox
+        args:
+        - sleep
+        - infinity
+        resources:
+          limits:
+            cpu: 100m
+            memory: 32Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
+        envFrom:
+        - configMapRef:
+            name: rollout-cm
+      terminationGracePeriodSeconds: 2

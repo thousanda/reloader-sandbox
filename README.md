@@ -12,5 +12,16 @@ see `./reloader`
 ## Try Reloader
 see `./apps`
 
-1. `kubectl apply .`
+1. `kubectl apply -f .`
 
+## If you use Argo Rollouts
+### Deploy Argo Rollouts to your cluster
+see `./argo-rollouts`
+
+1. `kubectl apply -f ns.yaml`
+2. run deploy_argo_rollouts.sh
+
+### Try Reloader with Rollouts
+see `./rollout-apps-with-deploy`
+
+1. `kubectl apply -f .`

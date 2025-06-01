@@ -1,2 +1,6 @@
 reloader:
-  namespaceSelector: "kubernetes.io/metadata.name=apps" # Comma separated list of k8s label selectors for namespaces selection
+  # Comma separated list of k8s label selectors for namespaces selection
+  namespaceSelector: "kubernetes.io/metadata.name=apps"
+  # Argo Rollouts support must be explicitly enabled
+  # This configuration is not needed when the Rollouts are defined referring Deployments in which Reloader is configured
+  isArgoRollouts: true

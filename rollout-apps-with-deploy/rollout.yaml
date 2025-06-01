@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Rollout
+metadata:
+  name: rollout-app
+  namespace: apps
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: rollout-app
+  workloadRef:  # 既存のDeploymentを参照する
+    apiVersion: apps/v1
+    kind: Deployment
+    name: deployment-for-rollout
+  strategy:
+    canary:
+      maxUnavailable: 100%
+      maxSurge: 100%
+      steps:
+        - setWeight: 100
