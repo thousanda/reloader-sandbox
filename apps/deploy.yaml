@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  annotations:
+    configmap.reloader.stakater.com/reload: app-cm
+  labels:
+    app: app
+  namespace: apps
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: app
+  strategy:
+    rollingUpdate:
+      maxSurge: 100%
+      maxUnavailable: 100%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - image: busybox:latest
+        imagePullPolicy: Always
+        name: busybox
+        args:
+        - sleep
+        - infinity
+        resources:
+          limits:
+            cpu: 100m
+            memory: 32Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
+        envFrom:
+        - configMapRef:
+            name: app-cm
+      terminationGracePeriodSeconds: 2
